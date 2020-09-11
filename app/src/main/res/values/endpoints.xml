@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Host name -->
+    <string name="base_url" translatable="false">https://api.punkapi.com/v2/</string>
+
+    <!-- Certificate pinning -->
+    <string name="certificate_pinning_sha256" translatable="false">sha256/***=</string>
+
+</resources>
