@@ -2,11 +2,18 @@
 buildscript {
 
     ext {
+        appcompatVersion = "1.1.0"
+        ktxCoreVersion = "1.2.0"
+        recyclerviewVersion = "1.1.0"
+        materialVersion = "1.2.1"
+        constraintLayoutVersion = "1.1.3"
         kotlinVersion = '1.3.72'
         koinVersion = "2.1.4"
         moshiVersion = "1.8.0"
         retrofitVersion = "2.6.1"
         okHttpVersion = "4.7.1"
+        pagingVersion = "3.0.0-alpha06"
+        picassoVersion = "2.71828"
     }
 
     ext.kotlin_version = "1.3.72"

@@ -12,11 +12,15 @@ abstract class BaseNetworkConfiguration(
 ) : NetworkConfiguration {
 
     override fun certificatePinner(): CertificatePinner? {
+        return null
+        /*
         return CertificatePinner.Builder()
             .add(
                 context.getString(R.string.base_url),
                 context.getString(R.string.certificate_pinning_sha256)
             ).build()
+
+         */
     }
 
     override fun useCacheHeaders() = false
