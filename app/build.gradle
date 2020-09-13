@@ -31,36 +31,50 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.72"
-    implementation "androidx.appcompat:appcompat:$appcompatVersion"
     implementation "androidx.core:core-ktx:$ktxCoreVersion"
-    implementation "com.google.android.material:material:$materialVersion"
+
+    implementation "androidx.appcompat:appcompat:$appcompatVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerviewVersion"
-    implementation "androidx.paging:paging-runtime:$pagingVersion"
+    implementation "com.google.android.material:material:$materialVersion"
 
-    // Koin
-    implementation "org.koin:koin-android:$koinVersion"
-    implementation "org.koin:koin-androidx-scope:$koinVersion"
-    implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
+    //ReactiveX
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
 
-    //Moshi
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
-    implementation "com.squareup.moshi:moshi-adapters:$moshiVersion"
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycleVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
 
-    //Retrofit2
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
-
-    //Okhttp3
+    //OkHttp
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
 
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+
+    //Dagger
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+
+    //Room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+
     //Picasso
     implementation "com.squareup.picasso:picasso:$picassoVersion"
+
+    //Paging
+    implementation "androidx.paging:paging-runtime:$pagingVersion"
+    implementation "androidx.paging:paging-rxjava2-ktx:$pagingVersion"
 
 }

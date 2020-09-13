@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">BeerBox</string>
     <string name="beer_name">Beer</string>
     <string name="box_name">Box</string>
+    <string name="app_name">Beer Box</string>
     <string name="search">Search</string>
     <string name="weekend_offers">Weekend Offers</string>
     <string name="free_shipping_on_orders_over_60">Free shipping on orders over 60€</string>
