@@ -15,16 +15,16 @@ class BeersRepository @Inject constructor(
 
     private val compositeDisposable = CompositeDisposable()
     var currentPage = 0
-    var reachedLastBear = false
+    var reachedLastBeer = false
     var isLoading = false
 
     fun <T> getBeers(perPage: Int, mapper: (Beer) -> (T)): LiveData<List<T>>? {
-        currentPage++
-        if (!reachedLastBear && !isLoading) {
+        if (!reachedLastBeer && !isLoading) {
+            currentPage++
             isLoading = true
             beersRemoteDataSource.getBeers(currentPage, perPage)?.subscribe({
                 isLoading = false
-                reachedLastBear = it.isEmpty() && currentPage > 0
+                reachedLastBeer = it.isEmpty() && currentPage > 0
                 beersLocalDataSource.insertBeers(it)
             }, {
                 currentPage--
