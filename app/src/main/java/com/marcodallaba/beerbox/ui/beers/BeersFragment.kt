@@ -6,9 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.SearchView
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,8 +38,12 @@ class BeersFragment : DaggerFragment(), SearchView.OnQueryTextListener, SearchVi
     private var beersAdapter: BeersAdapter = BeersAdapter()
     private val queryPublisher = PublishSubject.create<String>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_beers, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentBeersBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -60,7 +63,8 @@ class BeersFragment : DaggerFragment(), SearchView.OnQueryTextListener, SearchVi
         })
         binding.recyclerView.adapter = beersAdapter
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
-        context?.getDrawable(R.drawable.list_divider_dark)?.let { dividerItemDecoration.setDrawable(it) }
+        context?.getDrawable(R.drawable.list_divider_dark)
+            ?.let { dividerItemDecoration.setDrawable(it) }
         binding.recyclerView.addItemDecoration(dividerItemDecoration)
 
         binding.searchView.setOnQueryTextListener(this)
@@ -68,7 +72,8 @@ class BeersFragment : DaggerFragment(), SearchView.OnQueryTextListener, SearchVi
             .getIdentifier("android:id/search_close_btn", null, null)
         binding.searchView.findViewById<View>(searchCloseButtonId).setOnClickListener { onClose() }
 
-        beerViewModel = ViewModelProviders.of(this, viewModelsFactory).get(BeersViewModel::class.java)
+        beerViewModel = ViewModelProvider(this, viewModelsFactory).get(BeersViewModel::class.java)
+
         beerViewModel?.beers?.observe(viewLifecycleOwner, Observer { updateBeers(it) })
 
         binding.recyclerView.addOnScrollListener(ScrollListener(beerViewModel))
@@ -112,18 +117,29 @@ class BeersFragment : DaggerFragment(), SearchView.OnQueryTextListener, SearchVi
 
     private fun openBeerBottomSheet(beerItem: UIBeerItem) {
         BeerBottomSheetDialogFragment.newInstance(beerItem).apply {
-            this@BeersFragment.fragmentManager?.let { show(it, BottomSheetDialogFragment::class.java.canonicalName) }
+            this@BeersFragment.fragmentManager?.let {
+                show(
+                    it,
+                    BottomSheetDialogFragment::class.java.canonicalName
+                )
+            }
         }
     }
 
     private fun addFilters(beerTypes: List<BeerType>?) {
         val layoutInflater = LayoutInflater.from(context)
         beerTypes?.forEach {
-            val chip: Chip = layoutInflater.inflate(R.layout.filter_chip, binding.filterChipGroup, false) as Chip
+            val chip: Chip =
+                layoutInflater.inflate(R.layout.filter_chip, binding.filterChipGroup, false) as Chip
             chip.id = BeerTypeId.values().getOrNull(it.ordinal)?.id ?: View.generateViewId()
             chip.text = it.displayName
             chip.tag = it
-            chip.setOnCheckedChangeListener { buttonView, isChecked -> onChipChanged(buttonView, isChecked) }
+            chip.setOnCheckedChangeListener { buttonView, isChecked ->
+                onChipChanged(
+                    buttonView,
+                    isChecked
+                )
+            }
             TransitionManager.beginDelayedTransition(binding.filterChipGroup)
             binding.filterChipGroup.addView(chip)
         }
@@ -134,7 +150,8 @@ class BeersFragment : DaggerFragment(), SearchView.OnQueryTextListener, SearchVi
     }
 
     //This should be changed with the new Paging Library
-    class ScrollListener(private val beersViewModel: BeersViewModel?) : RecyclerView.OnScrollListener() {
+    class ScrollListener(private val beersViewModel: BeersViewModel?) :
+        RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
             val visibleItemCount = recyclerView.layoutManager?.childCount

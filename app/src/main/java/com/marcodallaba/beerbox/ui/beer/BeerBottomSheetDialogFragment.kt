@@ -8,8 +8,8 @@ import androidx.core.os.bundleOf
 import com.marcodallaba.beerbox.R
 import com.marcodallaba.beerbox.ui.beers.UIBeerItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.marcodallaba.beerbox.databinding.BeerBottomSheetDialogBinding
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.beer_bottom_sheet_dialog.*
 
 class BeerBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
@@ -22,17 +22,21 @@ class BeerBottomSheetDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
+    private lateinit var binding: BeerBottomSheetDialogBinding
+
     override fun getTheme(): Int = R.style.BeerBottomSheetDialogFragment
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.beer_bottom_sheet_dialog, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = BeerBottomSheetDialogBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val beerItem: UIBeerItem? = arguments?.getParcelable(BEER_KEY)
-        Picasso.get().load(beerItem?.imageUrl).into(imageView)
-        titleTextView.text = beerItem?.name
-        tagLine.text = beerItem?.tagLine
-        description.text = beerItem?.description
+        val beerItem: UIBeerItem? = arguments?.getSerializable(BEER_KEY) as UIBeerItem?
+        Picasso.get().load(beerItem?.imageUrl).into(binding.imageView)
+        binding.titleTextView.text = beerItem?.name
+        binding.tagLine.text = beerItem?.tagLine
+        binding.description.text = beerItem?.description
     }
 }

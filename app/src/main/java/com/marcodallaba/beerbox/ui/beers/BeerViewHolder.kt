@@ -1,18 +1,12 @@
 package com.marcodallaba.beerbox.ui.beers
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.marcodallaba.beerbox.databinding.BeerItemBinding
 import com.squareup.picasso.Picasso
-import kotlinx.android.extensions.LayoutContainer
 
 class BeerViewHolder(
     val binding: BeerItemBinding
-) : RecyclerView.ViewHolder(binding.root),
-    LayoutContainer {
-
-    override val containerView: View?
-        get() = itemView
+) : RecyclerView.ViewHolder(binding.root) {
 
     var beerItem: UIBeerItem? = null
         set(value) {
@@ -22,5 +16,4 @@ class BeerViewHolder(
             binding.tagLine.text = field?.tagLine
             binding.description.text = field?.description
         }
-
 }
