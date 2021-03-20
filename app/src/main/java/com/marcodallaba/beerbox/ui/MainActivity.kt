@@ -7,7 +7,6 @@ import android.text.Spanned
 import android.text.style.StyleSpan
 import com.marcodallaba.beerbox.R
 import com.marcodallaba.beerbox.databinding.ActivityMainBinding
-
 import com.marcodallaba.beerbox.ui.beers.BeersFragment
 import dagger.android.support.DaggerAppCompatActivity
 

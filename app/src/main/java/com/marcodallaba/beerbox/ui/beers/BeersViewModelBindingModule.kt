@@ -2,7 +2,6 @@ package com.marcodallaba.beerbox.ui.beers
 
 import androidx.lifecycle.ViewModel
 import com.marcodallaba.beerbox.di.qualifier.ViewModelKey
-import com.marcodallaba.beerbox.ui.beers.BeersViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

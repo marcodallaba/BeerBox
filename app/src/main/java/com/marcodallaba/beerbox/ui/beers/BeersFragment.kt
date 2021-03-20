@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.SearchView
-import androidx.lifecycle.Observer
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -63,7 +63,7 @@ class BeersFragment : DaggerFragment(), SearchView.OnQueryTextListener, SearchVi
         })
         binding.recyclerView.adapter = beersAdapter
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
-        context?.getDrawable(R.drawable.list_divider_dark)
+        context?.let { ContextCompat.getDrawable(it, R.drawable.list_divider_dark) }
             ?.let { dividerItemDecoration.setDrawable(it) }
         binding.recyclerView.addItemDecoration(dividerItemDecoration)
 
@@ -74,7 +74,7 @@ class BeersFragment : DaggerFragment(), SearchView.OnQueryTextListener, SearchVi
 
         beerViewModel = ViewModelProvider(this, viewModelsFactory).get(BeersViewModel::class.java)
 
-        beerViewModel?.beers?.observe(viewLifecycleOwner, Observer { updateBeers(it) })
+        beerViewModel?.beers?.observe(viewLifecycleOwner, { updateBeers(it) })
 
         binding.recyclerView.addOnScrollListener(ScrollListener(beerViewModel))
         beersAdapter.onMoreInfo.subscribe { openBeerBottomSheet(it) }.bindToLifecycle(this)
@@ -117,12 +117,10 @@ class BeersFragment : DaggerFragment(), SearchView.OnQueryTextListener, SearchVi
 
     private fun openBeerBottomSheet(beerItem: UIBeerItem) {
         BeerBottomSheetDialogFragment.newInstance(beerItem).apply {
-            this@BeersFragment.fragmentManager?.let {
-                show(
-                    it,
-                    BottomSheetDialogFragment::class.java.canonicalName
-                )
-            }
+            show(
+                this@BeersFragment.parentFragmentManager,
+                BottomSheetDialogFragment::class.java.canonicalName
+            )
         }
     }
 
