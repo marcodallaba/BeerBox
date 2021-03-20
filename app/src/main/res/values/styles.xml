@@ -24,4 +24,8 @@
         <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
 
+    <style name="BeerAppBarLayout" parent="@style/Widget.Design.AppBarLayout">
+        <item name="backgroundColor">@color/colorPrimary</item>
+    </style>
+
 </resources>
