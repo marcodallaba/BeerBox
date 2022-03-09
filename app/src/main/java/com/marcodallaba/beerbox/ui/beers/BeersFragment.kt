@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.SearchView
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,7 +33,7 @@ class BeersFragment : DaggerFragment(), SearchView.OnQueryTextListener, SearchVi
 
     @Inject
     lateinit var viewModelsFactory: ViewModelsFactory
-    private var beerViewModel: BeersViewModel? = null
+    private val beerViewModel: BeersViewModel by viewModels { viewModelsFactory }
     private val layoutManager = LinearLayoutManager(context)
     private var beersAdapter: BeersAdapter = BeersAdapter()
     private val queryPublisher = PublishSubject.create<String>()
@@ -72,19 +72,17 @@ class BeersFragment : DaggerFragment(), SearchView.OnQueryTextListener, SearchVi
             .getIdentifier("android:id/search_close_btn", null, null)
         binding.searchView.findViewById<View>(searchCloseButtonId).setOnClickListener { onClose() }
 
-        beerViewModel = ViewModelProvider(this, viewModelsFactory).get(BeersViewModel::class.java)
-
-        beerViewModel?.beers?.observe(viewLifecycleOwner, { updateBeers(it) })
+        beerViewModel.beers.observe(viewLifecycleOwner) { updateBeers(it) }
 
         binding.recyclerView.addOnScrollListener(ScrollListener(beerViewModel))
         beersAdapter.onMoreInfo.subscribe { openBeerBottomSheet(it) }.bindToLifecycle(this)
 
         queryPublisher.debounce(300, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { beerViewModel?.onQuery(it) }
+            .subscribe { beerViewModel.onQuery(it) }
             .bindToLifecycle(this)
 
-        addFilters(beerViewModel?.beerTypes)
+        addFilters(beerViewModel.beerTypes)
     }
 
     override fun onClose(): Boolean {
@@ -109,10 +107,11 @@ class BeersFragment : DaggerFragment(), SearchView.OnQueryTextListener, SearchVi
     }
 
     private fun onChipChanged(view: CompoundButton, isChecked: Boolean) {
-        if (isChecked)
-            beerViewModel?.addFilter(view.tag as BeerType)
-        else
-            beerViewModel?.removeFilter(view.tag as BeerType)
+        if (isChecked) {
+            beerViewModel.addFilter(view.tag as BeerType)
+        } else {
+            beerViewModel.removeFilter(view.tag as BeerType)
+        }
     }
 
     private fun openBeerBottomSheet(beerItem: UIBeerItem) {
@@ -148,7 +147,7 @@ class BeersFragment : DaggerFragment(), SearchView.OnQueryTextListener, SearchVi
     }
 
     //This should be changed with the new Paging Library
-    class ScrollListener(private val beersViewModel: BeersViewModel?) :
+    class ScrollListener(private val beersViewModel: BeersViewModel) :
         RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
@@ -157,7 +156,7 @@ class BeersFragment : DaggerFragment(), SearchView.OnQueryTextListener, SearchVi
             val firstVisibleItemPosition =
                 (recyclerView.layoutManager as? LinearLayoutManager)?.findFirstVisibleItemPosition()
 
-            beersViewModel?.getBeers(visibleItemCount, firstVisibleItemPosition, totalItemCount)
+            beersViewModel.getBeers(visibleItemCount, firstVisibleItemPosition, totalItemCount)
         }
     }
 
