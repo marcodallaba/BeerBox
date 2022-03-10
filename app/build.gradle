@@ -73,11 +73,19 @@ dependencies {
     implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
     implementation "androidx.paging:paging-rxjava2-ktx:$pagingVersion"
 
-    //Testing
+    // Testing
     testImplementation "junit:junit:$junitVersion"
+    // Core library
+    androidTestImplementation "androidx.test:core:$androidXTestVersion"
 
-    androidTestImplementation "androidx.test.ext:junit:$junitExtVersion"
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation "androidx.test:runner:$testRunnerVersion"
     androidTestImplementation "androidx.test:rules:$testRulesVersion"
+
+    // Assertions
+    androidTestImplementation "androidx.test.ext:junit:$testJunitVersion"
+    androidTestImplementation "androidx.test.ext:truth:$truthVersion"
+
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
 
 }
