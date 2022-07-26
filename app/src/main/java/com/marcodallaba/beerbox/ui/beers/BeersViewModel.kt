@@ -63,9 +63,10 @@ class BeersViewModel @Inject constructor(private val beersRepository: BeersRepos
 
     //This could be migrated to new Paged Library
     fun getBeers(visibleItemCount: Int?, firstVisibleItemPosition: Int?, totalItemCount: Int?) {
-        if (visibleItemCount?.plus(firstVisibleItemPosition ?: 0) ?: 0 >= (totalItemCount ?: 0) - 10
-            && firstVisibleItemPosition ?: 0 >= 0
-            && totalItemCount ?: 0 >= ITEM_PER_PAGE
+        if ((visibleItemCount?.plus(firstVisibleItemPosition ?: 0) ?: 0) >= (totalItemCount
+                ?: 0) - 10
+            && (firstVisibleItemPosition ?: 0) >= 0
+            && (totalItemCount ?: 0) >= ITEM_PER_PAGE
         ) {
             beersRepository.getBeers(ITEM_PER_PAGE) {
                 it.asUIModel()

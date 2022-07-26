@@ -39,13 +39,13 @@ ext {
     materialVersion = "1.6.1"
     rxAndroidVersion = "2.1.1"
     rxJavaVersion = '2.2.21'
-    lifecycleVersion = "2.4.1"
-    okHttpVersion = "4.7.1"
+    lifecycleVersion = "2.5.0"
+    okHttpVersion = "4.9.3"
     retrofitVersion = "2.6.1"
     roomVersion = '2.4.2'
     picassoVersion = "2.71828"
     pagingVersion = "3.1.1"
-    fragmentVersion = "1.4.1"
+    fragmentVersion = "1.5.0"
 
     junitVersion = '4.13.2'
     androidXTestVersion = '1.4.0'
