@@ -1,6 +1,6 @@
 # BeerBox
 
-Android App that uses https://api.punkapi.com/v2/.
+Android App that uses https://punkapi.com.
 
 Made with love using:<br/>
 Dagger2<br/>
