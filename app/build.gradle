@@ -70,10 +70,6 @@ dependencies {
     //Picasso
     implementation "com.squareup.picasso:picasso:$picassoVersion"
 
-    //Paging
-    implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
-    implementation "androidx.paging:paging-rxjava2-ktx:$pagingVersion"
-
     // Testing
     testImplementation "junit:junit:$junitVersion"
     // Core library
